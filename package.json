@@ -5,6 +5,19 @@
   "type": "module",
   "main": "lib/index.js",
   "license": "MIT",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "plugin",
+    "agents",
+    "instructions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/badai147/dsh-global-rules.git"
+  },
+  "homepage": "https://github.com/badai147/dsh-global-rules#readme",
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"

@@ -18,6 +18,12 @@ Edit your `~/.dsh/AGENTS.md` (global rules) from the DeepSeek Harness web settin
 ## 安装 / Install
 
 ```sh
+dsh plugin --profile web add dsh-global-rules
+```
+
+从 GitHub 源安装（备选）：
+
+```sh
 dsh plugin --profile web add github:badai147/dsh-global-rules
 ```
 
