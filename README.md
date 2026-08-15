@@ -1,5 +1,7 @@
 # dsh-global-rules
 
+[![Awesome DSH Plugin](https://awesome-dsh-plugin.com/badge.svg)](https://awesome-dsh-plugin.com)
+
 在 DeepSeek Harness Web 的设置面板中编辑 `~/.dsh/AGENTS.md`（全局规则）的插件。
 
 Edit your `~/.dsh/AGENTS.md` (global rules) from the DeepSeek Harness web settings panel.
