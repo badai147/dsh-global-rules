@@ -4,7 +4,7 @@
 
 Edit your `~/.dsh/AGENTS.md` (global rules) from the DeepSeek Harness web settings panel.
 
-![settings section](https://img.shields.io/badge/settings-全局规则-blue)
+![全局规则设置页](globalrule.png)
 
 ## 功能 / Features
 
