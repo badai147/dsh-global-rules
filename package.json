@@ -1,6 +1,6 @@
 {
   "name": "dsh-global-rules",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Edit ~/.dsh/AGENTS.md (global rules) from the web settings panel.",
   "type": "module",
   "main": "lib/index.js",
@@ -25,7 +25,6 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-connection",
-        "@deepseek-ai/dsh-client-runtime",
         "@deepseek-ai/dsh-client-locale",
         "@deepseek-ai/dsh-client-ui-settings"
       ],
