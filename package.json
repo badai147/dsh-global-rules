@@ -1,7 +1,7 @@
 {
   "name": "dsh-global-rules",
-  "version": "0.1.1",
-  "description": "Edit ~/.dsh/AGENTS.md (global rules) from the web settings panel.",
+  "version": "0.2.0",
+  "description": "Edit the user-global AGENTS.md ($DSH_HOME/AGENTS.md) from the web settings panel.",
   "type": "module",
   "main": "lib/index.js",
   "license": "MIT",
