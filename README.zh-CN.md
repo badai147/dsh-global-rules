@@ -66,6 +66,10 @@ dsh-global-rules/
 └── package.json
 ```
 
+## 更新日志
+
+各版本变更记录在 [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md)（[English](CHANGELOG.md)）。
+
 ## 参与贡献
 
 欢迎提交 Issue 与 PR——开发环境搭建、项目约定与提交规范见

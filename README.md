@@ -66,6 +66,10 @@ dsh-global-rules/
 └── package.json
 ```
 
+## Changelog
+
+Release notes live in [CHANGELOG.md](CHANGELOG.md) ([中文](CHANGELOG.zh-CN.md)).
+
 ## Contributing
 
 Bug reports, feature requests, and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md)

@@ -52,7 +52,7 @@ Manual test checklist: CONTRIBUTING.md.
   inside the Host/Origin fence and browser authentication.
 - npm ships only `lib/`, `cordis.patch.yml`, and the README; a new runtime file must be added to
   `files`.
-- Keep both languages in sync: two READMEs, two CONTRIBUTINGs.
+- Keep both languages in sync: two READMEs, two CONTRIBUTINGs, two CHANGELOGs.
 
 ## Security and testing gotchas
 
