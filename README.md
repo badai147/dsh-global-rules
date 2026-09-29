@@ -2,62 +2,74 @@
 
 [![Awesome DSH Plugin](https://awesome-dsh-plugin.com/badge.svg)](https://awesome-dsh-plugin.com)
 
-在 DeepSeek Harness Web 的设置面板中编辑用户级全局规则文件 `$DSH_HOME/AGENTS.md`（默认 `~/.dsh/AGENTS.md`）的插件。
+English | [中文](README.zh-CN.md)
 
 Edit your user-global rules file `$DSH_HOME/AGENTS.md` (default `~/.dsh/AGENTS.md`) from the DeepSeek Harness web settings panel.
 
-![全局规则设置页](globalrule.png)
+![Global rules settings page](globalrule.png)
 
-## 功能 / Features
+## Features
 
-- 设置页新增「全局规则」标签：打开即加载全局规则文件的当前内容，并显示它解析到的位置
-- 路径解析与 harness 一致：非空 `$DSH_HOME` 优先，否则 `~/.dsh`（与内置 `dsh-agent-instructions` 同规则，因此编辑的一定是真正生效的那个文件）
-- 编辑保存，实时生效：**新会话立即生效**；当前会话在下次文件操作后感知新规则（由 DSH 内置的 `dsh-agent-instructions` 动态检测机制完成）
-- 文件不存在时保存会自动创建
-- 零构建：Client 端为手写 `__ModuleLoader__` bundle，Host 端为纯 Node ESM
+- A new **Global rules** settings tab (labelled 「全局规则」): opening it loads the current content of the global rules file and shows the path it resolved to
+- Path resolution matches the harness: a non-blank `$DSH_HOME` wins, otherwise `~/.dsh` (the same rule the built-in `dsh-agent-instructions` follows, so you always edit the file that is actually in effect)
+- Edit and save with immediate effect: **new sessions** use the new rules on their first step; the current session picks them up after its next file operation (handled by DSH's built-in `dsh-agent-instructions` change detection)
+- Saving creates the file when it does not exist yet
+- Zero build: the client half is a hand-written `__ModuleLoader__` bundle, the host half is plain Node ESM
 
-## 安装 / Install
+## Requirements
+
+- DeepSeek Harness (`dsh`) with the `web` profile
+- No extra runtime dependency: the plugin ships only `lib/` and `cordis.patch.yml`
+
+## Install
 
 ```sh
 dsh plugin --profile web add dsh-global-rules
 ```
 
-从 GitHub 源安装（备选）：
+Installing from the GitHub source (alternative):
 
 ```sh
 dsh plugin --profile web add github:badai147/dsh-global-rules
 ```
 
-重启 `dsh web`，然后打开 **设置 → 全局规则**。
+Restart `dsh web`, then open **Settings → Global rules**.
 
-## 使用 / Usage
+## Usage
 
-1. 打开设置 → 全局规则
-2. 编辑规则内容（Markdown 格式，与 `AGENTS.md` 语法一致）
-3. 点击「保存」
+1. Open Settings → Global rules
+2. Edit the rules (Markdown, the same syntax as `AGENTS.md`)
+3. Click **Save**
 
-保存后：
+After saving:
 
-- 新会话：首次步骤直接读取新内容，立即生效
-- 当前会话：下一次文件系统工具调用后，DSH 会检测到文件变化并注入
-  "Updated instructions from: ~/.dsh/AGENTS.md"，模型按新规则执行
+- New sessions read the new content on their first step, so it applies immediately
+- The current session: after the next filesystem tool call, DSH detects the change and injects
+  "Updated instructions from: ~/.dsh/AGENTS.md", and the model follows the new rules
 
-## 工作原理 / How it works
+## How it works
 
-- **Host**（`lib/index.js`）：用 `ctx.connection.fetch.register` 注册精确 Fetch 路由 `GET/POST /api/global-rules`（读文件 / 写文件，256 KiB 上限）。它挂在 Connection 的 `/api` 通道上，因此自动落在 Host/Origin 栅栏与浏览器鉴权之内，无需自建同源校验
-- **Client**（`lib/client.js`）：手写 `window.__ModuleLoader__.load` bundle，注册 `settings.section` 的「全局规则」页面
-- **生效机制**：DSH 内置 `dsh-agent-instructions` 插件覆盖 `user-global` scope 的动态检测——无需插件做任何热重载
+- **Host** (`lib/index.js`): registers the exact Fetch route `GET/POST /api/global-rules` through `ctx.connection.fetch.register` (read the file / write the file, 256 KiB limit). It rides Connection's `/api` channel, so it lands inside the Host/Origin fence and browser authentication with no hand-rolled same-origin check
+- **Client** (`lib/client.js`): a hand-written `window.__ModuleLoader__.load` bundle that registers the **Global rules** page under `settings.section`
+- **Effect mechanism**: DSH's built-in `dsh-agent-instructions` plugin covers dynamic detection for the `user-global` scope, so this plugin needs no hot-reload of its own
 
-## 目录结构 / Structure
+## Project structure
 
 ```
 dsh-global-rules/
-├── cordis.patch.yml   # bundle patch：插入 global-rules 层
+├── cordis.patch.yml      # bundle patch: inserts the global-rules layer
 ├── lib/
-│   ├── index.js       # Host：/api 精确 Fetch 路由（Node ESM）
-│   └── client.js      # Client：设置页 UI（__ModuleLoader__ bundle）
+│   ├── index.js          # Host: exact /api Fetch route (Node ESM)
+│   └── client.js         # Client: settings panel UI (__ModuleLoader__ bundle)
+├── .github/workflows/
+│   └── publish.yml       # npm publish on version tags
 └── package.json
 ```
+
+## Contributing
+
+Bug reports, feature requests, and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md)
+([中文](CONTRIBUTING.zh-CN.md)) for the development setup, project conventions, and commit rules.
 
 ## License
 
