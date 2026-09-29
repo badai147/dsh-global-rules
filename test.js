@@ -5,7 +5,7 @@ import { createContext, runInContext } from 'node:vm';
 // Load client bundle in a browser-like mock context
 const code = readFileSync(new URL('./lib/client.js', import.meta.url), 'utf8');
 
-function runWithMocks({ lang, languages, docLang } = {}) {
+function loadModule() {
 	let exported;
 	const context = {
 		window: {
@@ -21,43 +21,54 @@ function runWithMocks({ lang, languages, docLang } = {}) {
 				},
 			},
 		},
-		navigator: {
-			language: lang,
-			languages: languages,
-		},
-		document: {
-			documentElement: {
-				lang: docLang,
-			},
-		},
 	};
 	createContext(context);
 	runInContext(code, context);
 	return exported;
 }
 
+const mod = loadModule();
+const { DICTS, name, inject, apply } = mod;
+
+assert.strictEqual(name, 'global-rules');
+assert.deepStrictEqual([...inject], ['slots', 'locale']);
+assert.ok(typeof apply === 'function');
+
 // 1. Verify key parity between en and zh
-const mod = runWithMocks({ lang: 'en-US' });
-const { I18N, getLang } = mod;
-assert.deepStrictEqual(Object.keys(I18N.zh).sort(), Object.keys(I18N.en).sort(), 'I18N keys must match');
-for (const key of Object.keys(I18N.en)) {
-	if (typeof I18N.en[key] === 'function') {
-		assert.strictEqual(typeof I18N.zh[key], 'function');
-		assert.ok(I18N.en[key]('test-path').includes('test-path'));
-		assert.ok(I18N.zh[key]('test-path').includes('test-path'));
-	} else {
-		assert.ok(I18N.en[key].length > 0, `en.${key} should not be empty`);
-		assert.ok(I18N.zh[key].length > 0, `zh.${key} should not be empty`);
-	}
+assert.deepStrictEqual(Object.keys(DICTS.zh).sort(), Object.keys(DICTS.en).sort(), 'DICTS keys must match');
+for (const key of Object.keys(DICTS.en)) {
+	assert.ok(typeof DICTS.en[key] === 'string' && DICTS.en[key].length > 0, `en.${key} should not be empty`);
+	assert.ok(typeof DICTS.zh[key] === 'string' && DICTS.zh[key].length > 0, `zh.${key} should not be empty`);
 }
 
-// 2. Test language detection
-assert.strictEqual(runWithMocks({ lang: 'zh-CN' }).getLang(), 'zh');
-assert.strictEqual(runWithMocks({ lang: 'zh-TW' }).getLang(), 'zh');
-assert.strictEqual(runWithMocks({ languages: ['zh-HK', 'en'] }).getLang(), 'zh');
-assert.strictEqual(runWithMocks({ lang: 'en-US' }).getLang(), 'en');
-assert.strictEqual(runWithMocks({ lang: 'ja-JP' }).getLang(), 'en');
-assert.strictEqual(runWithMocks({ docLang: 'zh-Hans' }).getLang(), 'zh');
-assert.strictEqual(runWithMocks({ docLang: 'en-US' }).getLang(), 'en');
+// 2. Test registration via apply(ctx)
+let registeredNs, registeredDicts, slotRegistered;
+const fakeCtx = {
+	effect: (fn) => fn(),
+	locale: {
+		register: (ns, dicts) => {
+			registeredNs = ns;
+			registeredDicts = dicts;
+		},
+		bind: (ns) => (key, params) => {
+			const str = registeredDicts.en[key] || key;
+			return params ? str.replace(/\{(\w+)\}/g, (_, k) => params[k] ?? _) : str;
+		},
+	},
+	slots: {
+		inject: (slot, fn) => fn(),
+		register: (meta, component) => {
+			slotRegistered = { meta, component };
+		},
+	},
+};
 
-console.log('✓ All i18n checks passed');
+apply(fakeCtx);
+assert.strictEqual(registeredNs, 'global-rules');
+assert.strictEqual(registeredDicts, DICTS);
+assert.strictEqual(slotRegistered.meta.name, 'settings.section');
+assert.strictEqual(slotRegistered.meta.id, 'global-rules');
+assert.strictEqual(slotRegistered.meta.locale, 'global-rules');
+assert.strictEqual(slotRegistered.meta.label(), 'Global Rules');
+
+console.log('✓ All i18n & lifecycle checks passed');
