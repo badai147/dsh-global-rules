@@ -4,9 +4,6 @@
   "description": "Edit the user-global AGENTS.md ($DSH_HOME/AGENTS.md) from the web settings panel.",
   "type": "module",
   "main": "lib/index.js",
-  "scripts": {
-    "test": "node test.js"
-  },
   "license": "MIT",
   "keywords": [
     "dsh",
