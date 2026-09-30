@@ -9,6 +9,8 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-30
+
 ### Added
 
 - `AGENTS.md`：面向编码 agent 的仓库指南。
@@ -58,7 +60,8 @@
 - Client 半边：手写 `__ModuleLoader__` bundle，注册该设置分区。
 - 文件不存在时，保存会自动创建。
 
-[Unreleased]: https://github.com/badai147/dsh-global-rules/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/badai147/dsh-global-rules/compare/v0.2.1...HEAD
+[0.2.1]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.1
 [0.2.0]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.0
 [0.1.1]: https://www.npmjs.com/package/dsh-global-rules/v/0.1.1
 [0.1.0]: https://www.npmjs.com/package/dsh-global-rules/v/0.1.0
