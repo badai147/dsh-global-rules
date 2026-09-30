@@ -18,8 +18,8 @@ user-global instruction file `$DSH_HOME/AGENTS.md` (default `~/.dsh/AGENTS.md`) 
 
 ## Build, test, lint
 
-There are none, deliberately: no dependencies, no build step, no test suite, no linter, and no
-`scripts` in `package.json`. Do not add one. Verify by hand instead:
+There is no toolchain, deliberately: no dependencies, no build step, no linter, and no `scripts` in
+`package.json`. Do not add one. Verify by hand instead:
 
 ```sh
 dsh plugin --profile web add .   # run from the repo root; relative specs resolve against the invocation dir
@@ -31,13 +31,17 @@ Restart `dsh web`, then open **Settings → 全局规则**.
 - Client change (`lib/client.js`): reload the page — the host re-reads a bundle whose mtime or size
   changed. Restart if the old UI persists.
 
+`node test.js` runs a zero-dependency self-check (dictionary parity plus the slot/locale
+registration shape) with no package script. It is not published to npm.
+
 Manual test checklist: CONTRIBUTING.md.
 
 ## Code style
 
 - Match the file you edit: `lib/index.js` uses 2-space indentation, `lib/client.js` uses tabs.
-- Source comments and JSDoc are English; user-facing panel strings are hard-coded Chinese. Keep both
-  patterns.
+- Source comments and JSDoc are English. User-facing panel strings come from the `global-rules`
+  locale namespace registered through `ctx.locale.register(ns, { zh, en })` — add a key to both
+  dictionaries, never a literal string in the render tree.
 - Conventional Commits (`feat`, `fix`, `docs`, `ci`, `chore`), subject in Chinese or English, one
   logical change per commit. Branch off `main`.
 

@@ -82,12 +82,15 @@ These keep the plugin installable and reviewable; a pull request that breaks one
 - **Published files.** npm ships only `lib/` and `cordis.patch.yml` (`files` in `package.json`).
   A new runtime file must be added there, or it will be missing after install.
 - **Style.** Match the file you are editing: `lib/index.js` uses 2-space indentation, `lib/client.js`
-  uses tabs. Source comments and JSDoc are in English; user-facing panel strings are currently
-  Chinese. Keep both patterns unless the change is specifically about them.
+  uses tabs. Source comments and JSDoc are in English. User-facing panel strings live in the
+  `global-rules` locale namespace (`DICTS` in `lib/client.js`) and are registered through
+  `ctx.locale` with both `zh` and `en` — add a key to both dictionaries, never a literal string in
+  the render tree.
 
 ## Manual test checklist
 
-The package has no automated test suite, so a pull request should state which of these you ran:
+There is no test runner; `node test.js` self-checks dictionary parity and the slot/locale
+registration shape. A pull request should state which of these it ran:
 
 1. With `$DSH_HOME` unset, the panel shows `~/.dsh/AGENTS.md`; with `$DSH_HOME` set, it shows
    `$DSH_HOME/AGENTS.md`.

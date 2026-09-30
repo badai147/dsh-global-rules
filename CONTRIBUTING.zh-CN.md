@@ -76,11 +76,13 @@ dsh plugin --profile web remove dsh-global-rules
 - **发布文件清单。** npm 只发布 `lib/` 与 `cordis.patch.yml`（见 `package.json` 的 `files`）；
   新增运行时会用到的文件必须加进该清单，否则安装后会缺失。
 - **风格。** 与所在文件保持一致：`lib/index.js` 用两个空格缩进，`lib/client.js` 用制表符。
-  源码注释与 JSDoc 用英文，用户可见的面板文案目前是中文；除非改动本身就是针对它们，否则沿用现状。
+  源码注释与 JSDoc 用英文；用户可见的面板文案放在 `global-rules` locale 命名空间里
+  （`lib/client.js` 的 `DICTS`），经 `ctx.locale` 注册且 `zh`、`en` 都要有——新增文案请同时补两本
+  字典，不要在渲染逻辑里写死字符串。
 
 ## 手工测试清单
 
-本包没有自动化测试，因此 PR 请说明你跑过下列哪几项：
+本包没有测试运行器；`node test.js` 可自检字典平价与 slot/locale 注册形态。因此 PR 请说明你跑过下列哪几项：
 
 1. 未设置 `$DSH_HOME` 时面板显示 `~/.dsh/AGENTS.md`；设置后显示 `$DSH_HOME/AGENTS.md`。
 2. 文件不存在时面板提示尚不存在，保存后文件被创建。

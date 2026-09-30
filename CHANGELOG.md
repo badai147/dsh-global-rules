@@ -12,9 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `AGENTS.md`: repository guidance for coding agents.
+- `test.js`: a zero-dependency self-check for dictionary parity and the slot/locale registration
+  shape, run with `node test.js`. It is not published to npm.
 
 ### Changed
 
+- The settings panel is localized through DSH's built-in locale service: it follows the active
+  interface language instead of always rendering Chinese, and re-renders live when the language
+  changes in Settings → General.
 - Documentation restructured: `README.md` is now the English README with a Chinese counterpart in
   `README.zh-CN.md`; contribution guidance moved to `CONTRIBUTING.md` / `CONTRIBUTING.zh-CN.md`.
 

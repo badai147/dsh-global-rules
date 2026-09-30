@@ -12,9 +12,13 @@
 ### Added
 
 - `AGENTS.md`：面向编码 agent 的仓库指南。
+- `test.js`：零依赖自检脚本，校验字典平价与 slot/locale 注册形态，用 `node test.js` 运行；
+  不随 npm 发布。
 
 ### Changed
 
+- 设置面板接入 DSH 内置的 locale 服务：界面跟随当前生效的语言，不再固定渲染中文；在
+  设置 → 通用 里切换语言时即时重渲染。
 - 文档结构重整：`README.md` 改为英文版，中文版移至 `README.zh-CN.md`；贡献指南移至
   `CONTRIBUTING.md` / `CONTRIBUTING.zh-CN.md`。
 
