@@ -19,7 +19,8 @@ Edit your user-global rules file `$DSH_HOME/AGENTS.md` (default `~/.dsh/AGENTS.m
 ## Requirements
 
 - DeepSeek Harness (`dsh`) with the `web` profile
-- No extra runtime dependency: the plugin ships only `lib/` and `cordis.patch.yml`
+- No extra runtime dependency: the plugin ships only `lib/`, `cordis.patch.yml`, `icon.svg`, and
+  `locale/*.json`
 
 ## Install
 
@@ -58,9 +59,13 @@ After saving:
 ```
 dsh-global-rules/
 ├── cordis.patch.yml      # bundle patch: inserts the global-rules layer
+├── icon.svg              # plugin icon shown on the Plugins page
 ├── lib/
 │   ├── index.js          # Host: exact /api Fetch route (Node ESM)
 │   └── client.js         # Client: settings panel UI (__ModuleLoader__ bundle)
+├── locale/
+│   ├── en.json           # plugin title and description (English)
+│   └── zh.json           # plugin title and description (Chinese)
 ├── .github/workflows/
 │   └── publish.yml       # npm publish on version tags
 └── package.json

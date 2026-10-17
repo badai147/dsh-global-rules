@@ -55,6 +55,7 @@ dsh plugin --profile web remove dsh-global-rules
 | --- | --- |
 | `lib/index.js` (Host) | Restart `dsh web` — the host half is loaded at profile startup |
 | `lib/client.js` (Client bundle) | Reload the page; the host re-reads the bundle when its timestamp or size changes. If the old UI still shows, restart `dsh web` |
+| `icon.svg` / `locale/*.json` (display metadata) | Reload the page and reopen **Plugins**; both are read on every list request. Adding a **new `exports` subpath** still needs a `dsh web` restart — Node caches each package's `exports` map for the life of the process |
 
 Debugging notes:
 
@@ -79,8 +80,9 @@ These keep the plugin installable and reviewable; a pull request that breaks one
   any new non-baseline request must also be declared in `dsh.client.inject` in `package.json`.
 - **Stay on `/api`.** New host endpoints must go through `ctx.connection.fetch.register` under
   `/api` so the Host/Origin fence and browser authentication apply. Do not open a separate route.
-- **Published files.** npm ships only `lib/` and `cordis.patch.yml` (`files` in `package.json`).
-  A new runtime file must be added there, or it will be missing after install.
+- **Published files.** npm ships only `lib/`, `cordis.patch.yml`, `icon.svg`, and the display
+  `locale/*.json` (`files` in `package.json`). A new runtime or display file must be added there,
+  or it will be missing after install.
 - **Style.** Match the file you are editing: `lib/index.js` uses 2-space indentation, `lib/client.js`
   uses tabs. Source comments and JSDoc are in English. User-facing panel strings live in the
   `global-rules` locale namespace (`DICTS` in `lib/client.js`) and are registered through

@@ -50,6 +50,7 @@ dsh plugin --profile web remove dsh-global-rules
 | --- | --- |
 | `lib/index.js`（Host） | 重启 `dsh web`——Host 端在 profile 启动时加载 |
 | `lib/client.js`（Client bundle） | 刷新页面；Host 在文件时间戳或大小变化时会重新读取 bundle。界面没更新就重启 `dsh web` |
+| `icon.svg` / `locale/*.json`（展示信息） | 刷新页面并重进「插件」页；两者每次列清单都会重读。但**新增 `exports` 子路径**仍需重启 `dsh web`——Node 按进程缓存每个包的 `exports` 表 |
 
 调试提示：
 
@@ -73,8 +74,8 @@ dsh plugin --profile web remove dsh-global-rules
   新增非基线请求时，必须同时在 `package.json` 的 `dsh.client.inject` 中声明。
 - **接口留在 `/api` 下。** 新增 Host 接口必须走 `ctx.connection.fetch.register` 并挂在 `/api` 下，
   这样才能套用 Host/Origin 栅栏与浏览器鉴权；不要另开路由。
-- **发布文件清单。** npm 只发布 `lib/` 与 `cordis.patch.yml`（见 `package.json` 的 `files`）；
-  新增运行时会用到的文件必须加进该清单，否则安装后会缺失。
+- **发布文件清单。** npm 只发布 `lib/`、`cordis.patch.yml`、`icon.svg` 与展示用的 `locale/*.json`
+  （见 `package.json` 的 `files`）；新增运行或展示用到的文件必须加进该清单，否则安装后会缺失。
 - **风格。** 与所在文件保持一致：`lib/index.js` 用两个空格缩进，`lib/client.js` 用制表符。
   源码注释与 JSDoc 用英文；用户可见的面板文案放在 `global-rules` locale 命名空间里
   （`lib/client.js` 的 `DICTS`），经 `ctx.locale` 注册且 `zh`、`en` 都要有——新增文案请同时补两本

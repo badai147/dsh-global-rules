@@ -30,6 +30,9 @@ Restart `dsh web`, then open **Settings → 全局规则**.
 - Host change (`lib/index.js`): restart `dsh web`.
 - Client change (`lib/client.js`): reload the page — the host re-reads a bundle whose mtime or size
   changed. Restart if the old UI persists.
+- Display metadata (`icon.svg`, `locale/*.json`): reload the page and reopen Plugins; both are read
+  per list request. A new `exports` subpath still needs a `dsh web` restart — Node caches each
+  package's `exports` map for the life of the process.
 
 `node test.js` runs a zero-dependency self-check (dictionary parity plus the slot/locale
 registration shape) with no package script. It is not published to npm.
@@ -54,8 +57,8 @@ Manual test checklist: CONTRIBUTING.md.
   non-baseline request also needs a `dsh.client.inject` entry.
 - Host endpoints must stay under `/api` via the Connection Fetch registry — that is what places them
   inside the Host/Origin fence and browser authentication.
-- npm ships only `lib/`, `cordis.patch.yml`, and the README; a new runtime file must be added to
-  `files`.
+- npm ships only `lib/`, `cordis.patch.yml`, `icon.svg`, `locale/`, and the README; a new runtime
+  or display file must be added to `files`.
 - Keep both languages in sync: two READMEs, two CONTRIBUTINGs, two CHANGELOGs.
 
 ## Security and testing gotchas

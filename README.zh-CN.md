@@ -19,7 +19,7 @@
 ## 环境要求
 
 - 已安装 DeepSeek Harness（`dsh`），并使用 `web` profile
-- 无额外运行时依赖：本包只发布 `lib/` 与 `cordis.patch.yml`
+- 无额外运行时依赖：本包只发布 `lib/`、`cordis.patch.yml`、`icon.svg` 与 `locale/*.json`
 
 ## 安装
 
@@ -58,9 +58,13 @@ dsh plugin --profile web add github:badai147/dsh-global-rules
 ```
 dsh-global-rules/
 ├── cordis.patch.yml      # bundle patch：插入 global-rules 层
+├── icon.svg              # 插件页显示的图标
 ├── lib/
 │   ├── index.js          # Host：/api 精确 Fetch 路由（Node ESM）
 │   └── client.js         # Client：设置页 UI（__ModuleLoader__ bundle）
+├── locale/
+│   ├── en.json           # 插件标题与描述（英文）
+│   └── zh.json           # 插件标题与描述（中文）
 ├── .github/workflows/
 │   └── publish.yml       # 版本 tag 触发 npm 发布
 └── package.json
