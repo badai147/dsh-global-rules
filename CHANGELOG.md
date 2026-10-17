@@ -17,6 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   interface, the title 「全局规则」 with a Chinese description. The Host reads both from
   `package.json`'s `icon` and the exported `locale/*.json` without loading the plugin.
 
+### Fixed
+
+- The settings panel now follows the harness theme: the save button, the error text, and the
+  textarea border use `--dsw-*` tokens instead of hardcoded colors, so they react to theme and
+  light/dark switches.
+- The save button has real hover and disabled feedback, and uses the built-in `md` size (36px)
+  instead of the compact 28px one.
+
 ## [0.2.1] - 2026-09-30
 
 ### Added
@@ -32,6 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   changes in Settings → General.
 - Documentation restructured: `README.md` is now the English README with a Chinese counterpart in
   `README.zh-CN.md`; contribution guidance moved to `CONTRIBUTING.md` / `CONTRIBUTING.zh-CN.md`.
+- The `npm test` script was removed: the repository deliberately has no toolchain, and `test.js`
+  is not published to npm, so run it directly with `node test.js`.
 
 ## [0.2.0] - 2026-09-26
 
