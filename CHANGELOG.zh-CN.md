@@ -9,6 +9,13 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-10-17
+
+### Added
+
+- 插件展示信息：插件页显示本插件自己的图标；中文界面下标题为「全局规则」，并带中文描述。
+  两者分别取自 `package.json` 的 `icon` 与导出的 `locale/*.json`，由 Host 在不加载插件的情况下读取。
+
 ## [0.2.1] - 2026-09-30
 
 ### Added
@@ -60,7 +67,8 @@
 - Client 半边：手写 `__ModuleLoader__` bundle，注册该设置分区。
 - 文件不存在时，保存会自动创建。
 
-[Unreleased]: https://github.com/badai147/dsh-global-rules/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/badai147/dsh-global-rules/compare/v0.2.2...HEAD
+[0.2.2]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.2
 [0.2.1]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.1
 [0.2.0]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.0
 [0.1.1]: https://www.npmjs.com/package/dsh-global-rules/v/0.1.1

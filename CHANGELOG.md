@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-10-17
+
+### Added
+
+- Plugin display metadata: the Plugins page shows the plugin's own icon and, under a Chinese
+  interface, the title 「全局规则」 with a Chinese description. The Host reads both from
+  `package.json`'s `icon` and the exported `locale/*.json` without loading the plugin.
+
 ## [0.2.1] - 2026-09-30
 
 ### Added
@@ -65,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Client half: a hand-written `__ModuleLoader__` bundle registering the settings section.
 - Saving creates the file when it does not exist yet.
 
-[Unreleased]: https://github.com/badai147/dsh-global-rules/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/badai147/dsh-global-rules/compare/v0.2.2...HEAD
+[0.2.2]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.2
 [0.2.1]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.1
 [0.2.0]: https://www.npmjs.com/package/dsh-global-rules/v/0.2.0
 [0.1.1]: https://www.npmjs.com/package/dsh-global-rules/v/0.1.1
